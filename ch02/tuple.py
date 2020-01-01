@@ -1,4 +1,5 @@
-"""
+"""元组
+
 >>> a = tuple([1, 'abc'])
 >>> a[0] = 100
 Traceback (most recent call last):
