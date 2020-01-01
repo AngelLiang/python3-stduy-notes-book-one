@@ -5,7 +5,10 @@
 False
 >>> issubclass(int, collections.Hashable)
 True
->>> # hash([1, 2, 3])
+>>> hash([1, 2, 3])
+Traceback (most recent call last):
+    ...
+TypeError: unhashable type: 'list'
 >>> hash((1, 2, [3, 4]))
 Traceback (most recent call last):
     ...
@@ -84,7 +87,36 @@ b 2
 a 1
 b 200
 c 3
->>>
+>>> def test(d):
+...     for k, v in d:
+...         print(k, v)
+...
+>>> x = dict(a=1)
+>>> d = x.items()
+>>> test(d)
+a 1
+
+# 视图还支持集合运算，以弥补字典功能上的不足。
+>>> a = dict(a=1, b=2)
+>>> b = dict(c=1, b=2)
+>>> ka = a.keys()
+>>> kb = b.keys()
+>>> ka & kb  # 交集：在a、b中同时存在
+{'b'}
+>>> ka | kb  # 并集：在a或b中存在
+{'a', 'b', 'c'}
+>>> ka - kb  # 差集：仅在a中存在
+{'a'}
+>>> ka ^ kb  # 对称差集：仅在a或仅在b中出现，相当于“并集-交集”
+{'a', 'c'}
+
+# 利用视图集合运算，可简化某些操作。
+>>> a = dict(a=1, b=2)
+>>> b = dict(b=20, c=3)
+>>> ks = a.keys() & b.keys()  # 交集，也就是a中必须存在的主键
+>>> a.update({k: b[k] for k in ks})  # 利用交集结果提取待更新的内容
+>>> a
+{'a': 1, 'b': 20}
 """
 
 
