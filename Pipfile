@@ -8,6 +8,7 @@ flake8 = "*"
 autopep8 = "*"
 
 [packages]
+psutil = "*"
 
 [requires]
 python_version = "3.6"
