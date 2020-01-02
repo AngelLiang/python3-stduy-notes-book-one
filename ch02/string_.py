@@ -1,4 +1,4 @@
-"""字符串
+r'''字符串
 字符串存储Unicode文本，是不可变序列类型。
 
 >>> s = '汉字'
@@ -9,7 +9,7 @@
 >>> chr(0x6c49)
 '汉'
 >>> ascii('汉字')  # 对 non-ASCII 进行转义
-"'\\\\u6c49\\\\u5b57'"
+"'\\u6c49\\u5b57'"
 >>> 'h\x69, \u6C49\U00005B57'
 'hi, 汉字'
 >>> "It's my life"  # 英文缩写
@@ -18,18 +18,18 @@
 'The report contained the "facts" of the case.'
 >>> 'hello' ', ' 'world'  # 自动合并多个相邻的字面量
 'hello, world'
->>> \"""
+>>> """
 ... Beautiful is batter than ugly.
 ... Explicit is better than implicit.
 ... Simple is better than complex.
-... \"""
-'\\nBeautiful is batter than ugly.\\nExplicit is better than implicit.\\nSimple is better than complex.\\n'
+... """
+'\nBeautiful is batter than ugly.\nExplicit is better than implicit.\nSimple is better than complex.\n'
 
 
 # 在字面量前添加标志，指示构建特定格式字符串。
 >>> f = open(r'.\README.md')  # Windows路径
 >>> import re
->>> re.findall(r'\\b\\d+\\b', 'a10 100')  #正则表达式
+>>> re.findall(r'\b\d+\b', 'a10 100')  #正则表达式
 ['100']
 >>> type(u'abc')  # 默认str就是unicode，无需添加u前缀
 <class 'str'>
@@ -115,7 +115,7 @@ True
 >>> import sys
 >>> sys.getdefaultencoding()
 'utf-8'
-"""
+'''
 
 
 if __name__ == "__main__":
