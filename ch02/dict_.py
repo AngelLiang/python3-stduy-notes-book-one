@@ -1,4 +1,7 @@
 """字典
+字典是内置类型中唯一的映射（mapping）结构，基于哈希表存储键值对数据。
+值可以是任意数据，但主键必须是可哈希类型。
+
 
 >>> import collections
 >>> issubclass(list, collections.Hashable)
@@ -9,14 +12,16 @@ True
 Traceback (most recent call last):
     ...
 TypeError: unhashable type: 'list'
->>> hash((1, 2, [3, 4]))
+>>> hash((1, 2, [3, 4]))  # 包含可变列表元素
 Traceback (most recent call last):
     ...
 TypeError: unhashable type: 'list'
 >>> callable(list().__hash__)
 False
 
-# 创建
+
+
+# 构建
 >>> {'a': 1, 'b': 2}  # 以大括号键值对方式创建
 {'a': 1, 'b': 2}
 >>> dict(a=1, b=2)  # 或调用类型构造
@@ -40,6 +45,8 @@ False
 >>> d = dict.fromkeys(('counter1', 'counter2'), 0)  # 显式提供主键
 >>> d
 {'counter1': 0, 'counter2': 0}
+
+
 
 # 操作
 # 字典不是序列类型，不支持序号访问，以主键读取、新增或删除内容。
@@ -69,9 +76,13 @@ False
 >>> x
 {'a': 0}
 
+
+
 # 字典不支持加法、乘法、大小等运算，但可比较内容是否相同。
 >>> {'b':2, 'a':1} == {'a':1, 'b':2}
 True
+
+
 
 # 视图
 >>> x = dict(a=1, b=2)
@@ -96,6 +107,8 @@ c 3
 >>> test(d)
 a 1
 
+
+
 # 视图还支持集合运算，以弥补字典功能上的不足。
 >>> a = dict(a=1, b=2)
 >>> b = dict(c=1, b=2)
@@ -109,6 +122,8 @@ a 1
 {'a'}
 >>> ka ^ kb  # 对称差集：仅在a或仅在b中出现，相当于“并集-交集”
 {'a', 'c'}
+
+
 
 # 利用视图集合运算，可简化某些操作。
 >>> a = dict(a=1, b=2)
