@@ -53,6 +53,7 @@ TypeError: cannot modify read-only memory
 b'\x13\x14\x15'
 """
 
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
