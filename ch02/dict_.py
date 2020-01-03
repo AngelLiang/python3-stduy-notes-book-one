@@ -132,6 +132,57 @@ a 1
 >>> a.update({k: b[k] for k in ks})  # 利用交集结果提取待更新的内容
 >>> a
 {'a': 1, 'b': 20}
+
+
+# 扩展
+# 默认字典（defaultdict）
+# 默认字典（defaultdict）类似于 setdefault 包装。
+# 当主键不存在时，调用构造参数提供的工厂函数返回默认值。
+>>> import collections
+>>> d = collections.defaultdict(lambda: 100)
+>>> d['a']
+100
+>>> d['b'] += 1
+>>> d
+defaultdict(<function <lambda> at 0x...>, {'a': 100, 'b': 101})
+
+# 有序字典（OrderedDict）
+# 与内部实现无关，有序字典（OrderedDict）明确记录主键首次插入的次序。
+>>> d = collections.OrderedDict()
+>>> d['z'] = 1
+>>> d['a'] = 2
+>>> d['x'] = 3
+>>> for k, v in d.items(): print(k, v)
+z 1
+a 2
+x 3
+
+# 计数器（Counter）
+# 计数器（Counter）对于不存在的主键返回零，但不会新增。
+>>> d = collections.Counter()
+>>> d['a']
+0
+>>> d['b'] += 1
+>>> d
+Counter({'b': 1})
+
+
+# 链式字典（ChainMap）
+# 链式字典（ChainMap）以单一接口访问多个字典内容，其自身并不存储数据。
+# 读操作按参数顺序依次查找各字典，但修改操作（新增、更新、删除）仅针对第一字典。
+>>> a = dict(a=1, b=2)
+>>> b = dict(b=20, c=30)
+>>> x = collections.ChainMap(a, b)
+>>> x['b'], x['c']  # 按顺序命中
+(2, 30)
+>>> for k, v in x.items(): print(k, v)  # 遍历所有字典
+a 1
+b 2
+c 30
+>>> x['b'] = 999  # 更新，命中第一字典
+>>> x['z'] = 888  # 新增，命中第一字典
+>>> x
+ChainMap({'a': 1, 'b': 999, 'z': 888}, {'b': 20, 'c': 30})
 """
 
 
