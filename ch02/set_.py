@@ -71,9 +71,46 @@ Traceback (most recent call last):
 KeyError: 2
 >>> x.discard(2)
 
+
+# 自定义类型
+自定义类型虽然是可哈希类型，但默认实现并不足以完成集合去重操作。
+>>> import collections
+>>> class User:
+...     def __init__(self, uid, name):
+...         self.uid = uid
+...         self.name = name
+...
+>>> issubclass(User, collections.Hashable)
+True
+>>> u1 = User(1, 'user1')
+>>> u2 = User(1, 'user1')
+>>> s = set()
+>>> s.add(u1)
+>>> s.add(u2)
+>>> s
+{<__main__.User object at 0x...>, <__main__.User object at 0x...>}
+
+根本原因是默认实现的__hash__方法返回随机值，而__eq__仅比较自身。为符合逻辑需要，须重载这两个方法。
+>>> class User:
+...     def __init__(self, uid, name):
+...         self.uid = uid
+...         self.name = name
+...     def __hash__(self):
+...         return hash(self.uid)
+...     def __eq__(self, other):
+...         return self.uid == other.uid
+...
+>>> u1 = User(1, 'user1')
+>>> u2 = User(1, 'user1')
+>>> s = set()
+>>> s.add(u1)
+>>> s.add(u2)
+>>> s
+{<__main__.User object at 0x...>}
 """
 
 
 if __name__ == "__main__":
     import doctest
-    doctest.testmod()
+    optionflags = doctest.ELLIPSIS
+    doctest.testmod(optionflags=optionflags)
